@@ -23,27 +23,36 @@ conn.commit()
 articles = {}
 
 news_title = []
+links = []
 author = []
 body = []
 dates = []
-links = []
 
-article_locations = doc.find_all(class_="news-image")
-for a in article_locations:
-    urls = a.find('a')
-    full_urls = f"https://www.myanmar-now.org{urls['href']}"
-    links.append(full_urls)
 
-titles = doc.find_all(class_='news-title')
-for b in titles:
-    title = b.find('a').string
-    news_title.append(title)
+
+
+def data_entry():
+    titles = doc.find_all(class_='news-title')
+    for b in titles:
+        title = b.find('a').string
+        news_title.append(title)
+        
+
+    article_locations = doc.find_all(class_="news-image")
+    for a in article_locations:
+        urls = a.find('a')
+        full_urls = f"https://www.myanmar-now.org{urls['href']}"
+        links.append(full_urls)
+
+data_entry()
 
 for i in range(len(links)):
     articles[news_title[i]] = links[i]
+    db.execute("""INSERT INTO articles (title, links) VALUES (?, ?)""", (news_title[i], links[i]))
+    conn.commit()
 
 
-#db.execute("""INSERT INTO articles (title, links) VALUES( 'potato', 'tomato')""")
+
 conn.commit()
 
 
