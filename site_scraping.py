@@ -13,7 +13,6 @@ db = conn.cursor()
 db.execute("""CREATE TABLE IF NOT EXISTS articles (
             title TEXT,
             links TEXT,
-            author TEXT,
             body TEXT,
             dates TEXT
             )""")
@@ -24,7 +23,6 @@ articles = {}
 
 news_title = []
 links = []
-author = []
 body = []
 dates = []
 
@@ -38,19 +36,30 @@ def data_entry():
         news_title.append(title)
         
 
-    article_locations = doc.find_all(class_="news-image")
+    article_locations = doc.find_all(class_='news-image')
     for a in article_locations:
         urls = a.find('a')
         full_urls = f"https://www.myanmar-now.org{urls['href']}"
         links.append(full_urls)
 
+    
+
+
 data_entry()
+
+
 
 for i in range(len(links)):
     articles[news_title[i]] = links[i]
-    db.execute("""INSERT INTO articles (title, links) VALUES (?, ?)""", (news_title[i], links[i]))
+    #db.execute("""INSERT INTO articles (title, links) VALUES (?, ?)""", (news_title[i], links[i]))
     conn.commit()
 
+
+body_locations = doc.find_all(class_='news-body')
+
+
+
+print(body_locations)
 
 
 conn.commit()
