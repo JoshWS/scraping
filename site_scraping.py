@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import sqlite3
+import csv
 
 # ask for user input for amount of pages, check to make sure the input is a positive integer.
 while True:
