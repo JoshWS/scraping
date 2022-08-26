@@ -26,7 +26,7 @@ db = conn.cursor()
 #makes table if not exists
 #db.execute("""DROP TABLE articles""")
 db.execute("""CREATE TABLE IF NOT EXISTS articles (
-            article_ID  INTEGER PRIMARY KEY,
+            article_ID  INTEGER PRIMARY KEY, 
             title TEXT,
             link TEXT,
             summary TEXT,
